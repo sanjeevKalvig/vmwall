@@ -1,0 +1,25 @@
+.app-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.side-panel {
+  width: 20%;
+  padding: 1rem;
+  background-color: #f0f0f0;
+  overflow-y: auto;
+}
+
+.left-panel {
+  border-right: 1px solid #ccc;
+}
+
+.right-panel {
+  border-left: 1px solid #ccc;
+}
+
+.canvas-container {
+  flex: 1;
+  background-color: #eaeaea;
+}
