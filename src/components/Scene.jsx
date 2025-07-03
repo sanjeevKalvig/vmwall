@@ -4,10 +4,9 @@ import { useState, useEffect } from "react";
 import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 
-export default function Scene() {
+export default function Scene({mode}) {
   const [droppedItems, setDroppedItems] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [mode, setMode] = useState("rotate");
   const { camera, raycaster } = useThree();
 
   const handleDrop = (modelPath, x, y) => {
@@ -34,7 +33,7 @@ export default function Scene() {
     return () => window.removeEventListener("model-drop", listener);
   }, []);
 
-  useEffect(() => {
+/*   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === "t") setMode("translate");
       if (e.key === "r") setMode("rotate");
@@ -42,6 +41,18 @@ export default function Scene() {
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
+  }, []); */
+
+  useEffect(() => {
+    const handlePointerDown = (e) => {
+      // Only deselect if the click is outside the canvas and transform controls
+      if (!e.target.closest(".transform-controls") && !e.target.closest("canvas")) {
+        setSelectedIndex(null);
+      }
+    };
+
+    window.addEventListener("pointerdown", handlePointerDown);
+    return () => window.removeEventListener("pointerdown", handlePointerDown);
   }, []);
 
   return (
@@ -59,7 +70,6 @@ export default function Scene() {
         droppedItems={droppedItems}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
-        
         mode={mode}
         setMode={() => {}}
       />

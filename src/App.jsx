@@ -63,9 +63,10 @@ export default function App() {
             value={mode}
             onChange={(e) => setMode(e.target.value)}
           >
-                        <option value="translate">Translate</option>
-                        <option value="rotate">Rotate</option>
-                        <option value="scale">Scale</option>
+            <option value="none">None</option>
+            <option value="translate">Translate</option>
+            <option value="rotate">Rotate</option>
+            <option value="scale">Scale</option>
           </select>
         </div>
         <Canvas camera={{ position: [0, 0, 3], fov: 60 }}>

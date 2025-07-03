@@ -55,7 +55,7 @@ export default function DropZone({
         />
       ))}
 
-      {selectedIndex !== null && selectedRef.current && (
+      {selectedIndex !== null && selectedRef.current && mode !== "none" && (
         <TransformControls
           object={selectedRef.current}
           mode={mode}
