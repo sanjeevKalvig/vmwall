@@ -7,6 +7,7 @@ export default function App() {
   const [mode, setMode] = useState("rotate");
 
   return (
+    
     <div className="app-layout">
       <div className="side-panel left-panel">
         <h3>Accessories</h3>
@@ -53,11 +54,11 @@ export default function App() {
           }
         }}
       >
-                {/* Transform Mode Dropdown */}
-               {" "}
+        {/* Transform Mode Dropdown */}
+        {" "}
         <div className="mode-selector">
-                    <label htmlFor="transform-mode">Transform Mode: </label>
-                  
+          <label htmlFor="transform-mode">Transform Mode: </label>
+
           <select
             id="transform-mode"
             value={mode}
@@ -70,7 +71,7 @@ export default function App() {
           </select>
         </div>
         <Canvas camera={{ position: [0, 0, 3], fov: 60 }}>
-                    <Scene mode={mode} />
+          <Scene mode={mode} />
         </Canvas>
       </div>
 
