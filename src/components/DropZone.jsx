@@ -1,8 +1,23 @@
 import { Box, TransformControls, useGLTF } from "@react-three/drei";
+import { useRef, useEffect } from "react";
 
-function AccessoryModel({ modelPath, position, scale }) {
+function AccessoryModel({ modelPath, position, scale, onClick, refCallback }) {
   const { scene } = useGLTF(modelPath);
-  return <primitive object={scene} position={position} scale={scale} />;
+  const modelRef = useRef();
+
+  useEffect(() => {
+    if (refCallback) refCallback(modelRef.current);
+  }, [refCallback]);
+
+  return (
+    <primitive
+      ref={modelRef}
+      object={scene}
+      position={position}
+      scale={scale}
+      onClick={onClick}
+    />
+  );
 }
 
 export default function DropZone({
@@ -16,6 +31,8 @@ export default function DropZone({
   setSelectedIndex,
   mode,
 }) {
+  const selectedRef = useRef();
+
   return (
     <group position={position} userData={{ isDropZone: true }}>
       <Box args={[width, height, depth]}>
@@ -32,13 +49,19 @@ export default function DropZone({
             e.stopPropagation();
             setSelectedIndex(index);
           }}
+          refCallback={(ref) => {
+            if (index === selectedIndex) selectedRef.current = ref;
+          }}
         />
       ))}
 
-      {selectedIndex !== null && droppedItems[selectedIndex] && (
+      {selectedIndex !== null && selectedRef.current && (
         <TransformControls
-          object={droppedItems[selectedIndex].object}
+          object={selectedRef.current}
           mode={mode}
+          showX
+          showY
+          showZ
         />
       )}
     </group>

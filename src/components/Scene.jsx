@@ -34,12 +34,21 @@ export default function Scene() {
     return () => window.removeEventListener("model-drop", listener);
   }, []);
 
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "t") setMode("translate");
+      if (e.key === "r") setMode("rotate");
+      if (e.key === "s") setMode("scale");
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
+
   return (
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} intensity={1} />
       <Environment preset="city" />
-      <OrbitControls />
 
       <DropZone
         position={[0, 0, 0]}
@@ -50,7 +59,9 @@ export default function Scene() {
         droppedItems={droppedItems}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
+        
         mode={mode}
+        setMode={() => {}}
       />
     </>
   );

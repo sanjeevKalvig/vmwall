@@ -1,8 +1,11 @@
 import { Canvas } from "@react-three/fiber";
 import Scene from "./components/Scene";
 import "./styles.css";
+import { useState } from "react";
 
 export default function App() {
+  const [mode, setMode] = useState("rotate");
+
   return (
     <div className="app-layout">
       <div className="side-panel left-panel">
@@ -44,12 +47,29 @@ export default function App() {
           if (modelPath) {
             const x = (e.clientX / window.innerWidth) * 2 - 1;
             const y = -(e.clientY / window.innerHeight) * 2 + 1;
-            window.dispatchEvent(new CustomEvent("model-drop", { detail: { modelPath, x, y } }));
+            window.dispatchEvent(
+              new CustomEvent("model-drop", { detail: { modelPath, x, y } })
+            );
           }
         }}
       >
+                {/* Transform Mode Dropdown */}
+               {" "}
+        <div className="mode-selector">
+                    <label htmlFor="transform-mode">Transform Mode: </label>
+                  
+          <select
+            id="transform-mode"
+            value={mode}
+            onChange={(e) => setMode(e.target.value)}
+          >
+                        <option value="translate">Translate</option>
+                        <option value="rotate">Rotate</option>
+                        <option value="scale">Scale</option>
+          </select>
+        </div>
         <Canvas camera={{ position: [0, 0, 3], fov: 60 }}>
-          <Scene />
+                    <Scene mode={mode} />
         </Canvas>
       </div>
 
